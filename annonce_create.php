@@ -20,10 +20,10 @@ $annonces = $AnnoncesService->getAnnonce();
     <label for="prix">Prix :</label>
     <input type="text" name="prix">
     <br />
-    <label for="users">Utilsateurs :</label>
-    <?php foreach ($users as $user): ?>
-        <?php $userName = $user->getFirstname() . ' ' . $user->getLastname() . ' ' . $user->getEmail() .' '.$user->getBirthday(); ?>
-        <input type="checkbox" name="users[]" value="<?php echo $user->getId(); ?>"><?php echo $userName; ?>
+    <label for="cars">Utilsateurs :</label>
+    <?php foreach ($cars as $car): ?>
+        <?php $carName = $car->getTitre() . ' ' . $car->getPrix(); ?>
+        <input type="checkbox" name="cars[]" value="<?php echo $car->getId(); ?>"><?php echo $carName; ?>
         <br />
     <?php endforeach; ?>
     <br />

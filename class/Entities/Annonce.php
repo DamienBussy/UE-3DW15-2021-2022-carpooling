@@ -2,11 +2,12 @@
 
 namespace App\Entities;
 
-class Car
+class Annonce
 {
     private $id;
     private $titre;
     private $prix;
+    private $cars;
 
     public function getId(): string
     {
@@ -40,6 +41,18 @@ class Car
     public function setPrix(string $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getCars(): ?array
+    {
+        return $this->cars;
+    }
+
+    public function setCars(array $users)
+    {
+        $this->cars = $cars;
 
         return $this;
     }

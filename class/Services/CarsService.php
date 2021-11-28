@@ -29,4 +29,29 @@ class CarsService
 
         return $cars;
     }
+
+    public function setCars(string $id, string $brand, string $model,string $color,int $nbrSlots){
+        $carId = '';
+
+        $dataBaseService = new DataBaseService();
+
+        if (empty($id)) {
+            $carId = $dataBaseService->createCar($brand, $model, $color, $nbrSlots);
+        } else {
+            $dataBaseService->updateCar($id, $brand, $model, $color, $nbrSlots);
+            $carId = $id;
+        }
+
+        return $carId;
+    } 
+
+    public function deleteCar(string $id): bool
+    {
+        $isOk = false;
+
+        $dataBaseService = new DataBaseService();
+        $isOk = $dataBaseService->deleteCar($id);
+
+        return $isOk;
+    }s
 }
