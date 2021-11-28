@@ -68,14 +68,17 @@ class AnnoncesController
                     $reservationsHtml .= $reservation->getnameReservation() .' ';
                 }
             }
-        }
 
-        $reservationsHtml = '';
-        if (!empty($annonce->getReservations()))
-        {
-            foreach ($annonce->getReservations() as $reservation)
+            $carsHtml = '';
+            if (!empty($annonce->getCars()))
             {
-                $reservationsHtml .= $reservation->getnameReservation() .' ';
+                foreach ($annonce->getCars() as $car)
+                {
+                    $carsHtml .= $car->getBrand() .' '.
+                    $carsHtml .= $car->getModel() .' '.
+                    $carsHtml .= $car->getColor() .' '.
+                    $carsHtml .= $car->getNbrSlots() .' ';
+                }
             }
         }
         return $html;

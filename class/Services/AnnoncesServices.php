@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Services\DataBaseService;
 use App\Entities\Annonce;
 use App\Entities\Reservation;
+use App\Entities\Car;
 use DateTime;
 
 class AnnoncesService
@@ -95,5 +96,43 @@ class AnnoncesService
             }
         }
         return $AnnonceReservation;
+    }
+
+    public function setAnnonceCar(string $annonceId, string $carId): bool
+    {
+        $isOk = false;
+
+        $dataBaseService = new DataBaseService();
+        $isOk = $dataBaseService->setAnnonceCar($annonceId, $carId);
+
+        return $isOk;
+    }
+
+    /**
+     * Get cars of given user id.
+     */
+    public function getAnnoncesCars(string $annonceId): array
+    {
+        $annoncesCars = [];
+
+        $dataBaseService = new DataBaseService();
+
+        // Get relation users and cars :
+        $annoncesCarsDTO = $dataBaseService->getAnnoncesCars($annonceId);
+        if (!empty($annoncesCarsDTO)) 
+        {
+            foreach ($annoncesCarsDTO as $annonceCarDTO) 
+            {
+                $car = new Car();
+                $car->setId($annonceCarDTO['id']);
+                $car->setBrand($annonceCarDTO['brand']);
+                $car->setModel($annonceCarDTO['model']);
+                $car->setColor($annonceCarDTO['color']);
+                $car->setNbrSlots($annonceCarDTO['nbrSlots']);
+                $annoncesCars[] = $car;
+            }
+        }
+
+        return $annoncesCars;
     }
 }

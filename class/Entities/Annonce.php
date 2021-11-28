@@ -8,6 +8,7 @@ class Annonce
     private $titre;
     private $prix;
     private $reservations;
+    private $cars;
     
     public function getId(): string
     {
@@ -53,6 +54,18 @@ class Annonce
     public function setReservations(string $reservations): self
     {
         $this->reservations = $reservations;
+
+        return $this;
+    }
+
+    public function getCars(): string
+    {
+        return $this->cars;
+    }
+
+    public function setCars(string $cars): self
+    {
+        $this->cars = $cars;
 
         return $this;
     }
