@@ -28,14 +28,14 @@ INSERT INTO `users_cars` (`user_id`, `car_id`) VALUES
 
 
 
-CREATE TABLE `annonce` (
+CREATE TABLE `annonces` (
   `id` int NOT NULL,
   `titre` varchar(255) NOT NULL,
   `prix` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 
-INSERT INTO `annonce` (`id`, `titre`, `prix`) VALUES
+INSERT INTO `annonces` (`id`, `titre`, `prix`) VALUES
 (1,'Trajet Bézier-Montpellier', 14),
 (2,  'Trajet France-Belgique', 30),
 (7, 'Trajet Nîmes-Arles', 10);

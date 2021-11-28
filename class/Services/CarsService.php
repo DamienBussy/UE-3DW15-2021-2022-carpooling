@@ -30,7 +30,8 @@ class CarsService
         return $cars;
     }
 
-    public function setCars(string $id, string $brand, string $model,string $color,int $nbrSlots){
+    public function setCar(?string $id, string $brand, string $model,string $color,int $nbrSlots): string
+    {
         $carId = '';
 
         $dataBaseService = new DataBaseService();
@@ -53,5 +54,5 @@ class CarsService
         $isOk = $dataBaseService->deleteCar($id);
 
         return $isOk;
-    }s
+    }
 }

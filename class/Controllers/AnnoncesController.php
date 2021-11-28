@@ -36,17 +36,18 @@ class AnnoncesController
     /**
      * Return the html for the read action.
      */
-    public function getAnnonce(): string
+    public function getAnnonces(): string
     {
         $html = '';
 
         // Get all notices :
-        $annonceService = new AnnoncesService();
-        $annonces = $annonceService->getAnnonce();
+        $annoncesService = new AnnoncesService();
+        $annonces = $annoncesService->getAnnonces();
 
         
         // Get html :
-        foreach ($annonces as $annonce){
+        foreach ($annonces as $annonce)
+        {
             $html .=
                 '#' . $annonce->getId() . ' ' .
                 $annonce->getTitre() . ' ' .

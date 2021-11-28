@@ -108,23 +108,6 @@ class DataBaseService
         return $isOk;
     }
 
-    /**
-     * Return all cars.
-     */
-    public function getCars(): array
-    {
-        $cars = [];
-
-        $sql = 'SELECT * FROM cars';
-        $query = $this->connection->query($sql);
-        $results = $query->fetchAll(PDO::FETCH_ASSOC);
-        if (!empty($results)) {
-            $cars = $results;
-        }
-
-        return $cars;
-    }
-
     // Create a reservation
     public function createReservation(string $nameReservation, DateTime $firstDate, DateTime $endDate): string
     {
@@ -355,7 +338,8 @@ class DataBaseService
     }
 
     // Retournes toutes les annonces
-    public function getAnnonce(){
+    public function getAnnonces()
+    {
     
         $annonces = [];
     
@@ -363,7 +347,7 @@ class DataBaseService
         $query = $this->connection->query($sql);
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         if (!empty($results)) {
-            $ads = $results;
+            $annonces = $results;
         }
     
         return $annonces;
@@ -372,22 +356,22 @@ class DataBaseService
      // Creation d'une annonce   
     
     public function createAnnonce(string $titre, int $prix): string
-        {
-            $annonceId = '';
-    
-            $data = [
-                'titre' => $titre,
-                'prix' => $prix,
-            ];
-            $sql = 'INSERT INTO annonce (titre, prix) VALUES (:titre, :prix)';
-            $query = $this->connection->prepare($sql);
-            $isOk = $query->execute($data);
-            if ($isOk) {
-                $annonceId = $this->connection->lastInsertId();
-            }
-    
-            return $annonceId;
+    {
+        $annonceId = '';
+
+        $data = [
+            'titre' => $titre,
+            'prix' => $prix,
+        ];
+        $sql = 'INSERT INTO annonces (titre, prix) VALUES (:titre, :prix)';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+        if ($isOk) {
+            $annonceId = $this->connection->lastInsertId();
         }
+
+        return $annonceId;
+    }
     
         /**
          * Mise a jour de l'annonce.
@@ -402,7 +386,7 @@ class DataBaseService
                 'prix' => $prix,
                 
             ];
-            $sql = 'UPDATE annonce SET titre = :titre, prix = :prix WHERE id = :id;';
+            $sql = 'UPDATE annonces SET titre = :titre, prix = :prix WHERE id = :id;';
             $query = $this->connection->prepare($sql);
             $isOk = $query->execute($data);
     
@@ -419,90 +403,51 @@ class DataBaseService
             $data = [
                 'id' => $id,
             ];
-            $sql = 'DELETE FROM annonce WHERE id = :id;';
+            $sql = 'DELETE FROM annonces WHERE id = :id;';
             $query = $this->connection->prepare($sql);
             $isOk = $query->execute($data);
     
             return $isOk;
         }
     // Relation Annonce et Voiture
-    
-        public function setAnnonceCar(string $annonceId, string $carId): bool
-        {
-            $isOk = false;
-    
-            $data = [
-                'annonceId' => $annonceId,
-                'carId' => $carId,
-            ];
-            $sql = 'INSERT INTO annonces_cars (annonce_id, car_id) VALUES (:annonceId, :carId)';
-            $query = $this->connection->prepare($sql);
-            $isOk = $query->execute($data);
-    
-            return $isOk;
-        }
-    
-    // Relation annonce et voiture
-        public function getAnnoncesCars(string $annonceId): array
-        {
-            $annonceCars = [];
-    
-            $data = [
-                'annonceId' => $annonceId,
-            ];
-            $sql = '
-                SELECT *
-                FROM cars as c
-                LEFT JOIN annonces_cars as a ON a.car_id = c.id
-                WHERE as.annonce_id = :annonceId';
-            $query = $this->connection->prepare($sql);
-            $query->execute($data);
-            $results = $query->fetchAll(PDO::FETCH_ASSOC);
-            if (!empty($results)) {
-                $annonceCars = $results;
-            }
-    
-            return $annonceCars;
-        }
-        // Creer un utilisateur
-
-        public function createUser(string $firstname, string $lastname, string $email, DateTime $birthday): string
+    public function setAnnonceCar(string $annonceId, string $carId): bool
     {
-        $userId = '';
+        $isOk = false;
 
         $data = [
-            'firstname' => $firstname,
-            'lastname' => $lastname,
-            'email' => $email,
-            'birthday' => $birthday->format(DateTime::RFC3339),
+            'annonceId' => $annonceId,
+            'carId' => $carId,
         ];
-        $sql = 'INSERT INTO users (firstname, lastname, email, birthday) VALUES (:firstname, :lastname, :email, :birthday)';
+        $sql = 'INSERT INTO annonces_cars (annonce_id, car_id) VALUES (:annonceId, :carId)';
         $query = $this->connection->prepare($sql);
         $isOk = $query->execute($data);
-        if ($isOk) {
-            $userId = $this->connection->lastInsertId();
-        }
 
-        return $userId;
+        return $isOk;
     }
-
-     /**
-     * Retourne tout les véhicules.
-     */
-    public function getCars(): array
+    
+    // Relation annonce et voiture
+    public function getAnnoncesCars(string $annonceId): array
     {
-        $cars = [];
-     
+        $annonceCars = [];
 
-        $sql = 'SELECT * FROM cars';
-        $query = $this->connection->query($sql);
+        $data = [
+            'annonceId' => $annonceId,
+        ];
+        $sql = '
+            SELECT *
+            FROM cars as c
+            LEFT JOIN annonces_cars as a ON a.car_id = c.id
+            WHERE as.annonce_id = :annonceId';
+        $query = $this->connection->prepare($sql);
+        $query->execute($data);
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         if (!empty($results)) {
-            $cars = $results;
+            $annonceCars = $results;
         }
 
-        return $cars;
+        return $annonceCars;
     }
+
 
     // Creation d'un véhicule
     public function createCar(string $brand, string $model, string $color, string $nbrSlots): string
@@ -518,11 +463,30 @@ class DataBaseService
         $sql = 'INSERT INTO cars (brand, model, color, nbrSlots) VALUES (:brand, :model, :color, :nbrSlots)';
         $query = $this->connection->prepare($sql);
         $isOk = $query->execute($data);
-        if ($isOk) {
+        if ($isOk)
+        {
             $carId = $this->connection->lastInsertId();
         }
 
         return $carId;
+    }
+
+    /**
+     * Retourne tout les véhicules.
+     */
+    public function getCars(): array
+    {
+        $cars = [];
+     
+
+        $sql = 'SELECT * FROM cars';
+        $query = $this->connection->query($sql);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $cars = $results;
+        }
+
+        return $cars;
     }
 
     /**
@@ -562,47 +526,4 @@ class DataBaseService
         return $isOk;
     }
 
-
-    /**
-     * Create relation bewteen an user and his car.
-     */
-    public function setUserCar(string $userId, string $carId): bool
-    {
-        $isOk = false;
-
-        $data = [
-            'userId' => $userId,
-            'carId' => $carId,
-        ];
-        $sql = 'INSERT INTO users_cars (user_id, car_id) VALUES (:userId, :carId)';
-        $query = $this->connection->prepare($sql);
-        $isOk = $query->execute($data);
-
-        return $isOk;
-    }
-
-    /**
-     * relation entre utilistaeur et voiture.
-     */
-    public function getUserCars(string $userId): array
-    {
-        $userCars = [];
-
-        $data = [
-            'userId' => $userId,
-        ];
-        $sql = '
-            SELECT *
-            FROM cars as c
-            LEFT JOIN users_cars as uc ON uc.car_id = c.id
-            WHERE uc.user_id = :userId';
-        $query = $this->connection->prepare($sql);
-        $query->execute($data);
-        $results = $query->fetchAll(PDO::FETCH_ASSOC);
-        if (!empty($results)) {
-            $userCars = $results;
-        }
-
-        return $userCars;
-    }
 }

@@ -2,19 +2,20 @@
 
 namespace App\Services;
 
-use App\Entities\Car;
+use App\Entities\Annonce;
 
 class AnnoncesService
 {
 
-    public function getAnnonce(): array
+    public function getAnnonces(): array
     {
-        $cars = [];
+        $annonce = [];
 
         $dataBaseService = new DataBaseService();
-        $annoncesDTO = $dataBaseService->getAnnonce();
+        $annoncesDTO = $dataBaseService->getAnnonces();
         if (!empty($annoncesDTO)) {
-            foreach ($annoncesDTO as $annonceDTO) {
+            foreach ($annoncesDTO as $annonceDTO)
+            {
                 $annonce = new Annonce();
                 $annonce->setId($annonceDTO['id']);
                 $annonce->setTitre($annonceDTO['titre']);
@@ -26,7 +27,7 @@ class AnnoncesService
         return $annonces;
     }
 
-    public function setAnnonce(string $id, string $titre, int $prix){
+    public function setAnnonce(?string $id, string $titre, int $prix){
         $annonceId = '';
 
         $dataBaseService = new DataBaseService();

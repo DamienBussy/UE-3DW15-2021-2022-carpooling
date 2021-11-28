@@ -7,8 +7,7 @@ class Annonce
     private $id;
     private $titre;
     private $prix;
-    private $cars;
-
+    
     public function getId(): string
     {
         return $this->id;
@@ -41,18 +40,6 @@ class Annonce
     public function setPrix(string $prix): self
     {
         $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getCars(): ?array
-    {
-        return $this->cars;
-    }
-
-    public function setCars(array $users)
-    {
-        $this->cars = $cars;
 
         return $this;
     }

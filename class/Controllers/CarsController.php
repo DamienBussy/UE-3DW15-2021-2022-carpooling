@@ -3,8 +3,9 @@
 namespace App\Controllers;
 
 use App\Services\CarsService;
-class CarsController {
 
+class CarsController
+{
     public function createCar(): string {
 
         $html='';
@@ -15,16 +16,17 @@ class CarsController {
         )
 
         // Create the car :
-        $usersService = new UsersService();
-        $carId = $CarsService->setCar(
+        $carsService = new CarsService();
+        $carId = $carsService->setCar(
             null,
             $_POST['brand'],
             $_POST['model'],
             $_POST['color'],
-            $_POST['nbrSlots']
+            $_POST['nbrSlots'],
         );
 
-        if($carId){
+        if($carId)
+        {
             $html="Le véhicule vient d'être ajouté";
         }
         else{
@@ -43,7 +45,7 @@ class CarsController {
             isset($_POST['nbrSlots'])
         ){
         $carsService=new CarsService();
-        $isOk = $carsService->setUser(
+        $isOk = $carsService->setCar(
             $_POST['id'],
             $_POST['brand'],
             $_POST['model'],
@@ -56,7 +58,7 @@ class CarsController {
             $html = 'Erreur lors de la mise à jour du véhicule.';
         }
     }
-    return html;
+    return $html;
 
     }
 
@@ -92,7 +94,7 @@ public function getCars(): string
         // Get html :
         foreach ($cars as $car){
             $html .=
-                '#' . $user->getId() . ' ' .
+                '#' . $car->getId() . ' ' .
                 $car->getBrand() . ' ' .
                 $car->getModel() . ' ' .
                 $car->getColor() . ' ' .
@@ -104,11 +106,4 @@ public function getCars(): string
     }
 
 }
-
-   
-
-
-
-
-
 ?>
