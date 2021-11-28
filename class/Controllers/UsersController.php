@@ -39,7 +39,28 @@ class UsersController
                     $isOk = $usersService->setUserCar($userId, $carId);
                 }
             }
-            if ($userId && $isOk) 
+
+            // Create the user annonces relations :
+            $isOkUA = true;
+            if (!empty($_POST['annonces'])) 
+            {
+                foreach ($_POST['annonces'] as $annonceId)
+                {
+                    $isOkUA = $usersService->setUserAnnonce($userId, $annonceId);
+                }
+            }
+
+            // Create the user reservation relations :
+            $isOkUR = true;
+            if (!empty($_POST['reservations'])) 
+            {
+                foreach ($_POST['reservations'] as $reservationId) 
+                {
+                    $isOkUR = $usersService->setUserReservation($userId, $reservationId);
+                }
+            }
+
+            if ($userId && $isOk && $isOkUA && $isOkUR) 
             {
                 $html = 'Utilisateur créé avec succès.';
             } 
@@ -80,18 +101,17 @@ class UsersController
                 foreach ($user->getReservations() as $reservation)
                 {
                     $reservationsHtml .= $reservation->getnameReservation() .' ';
-                    //' ' . $reservation->getfirstDate() . ' ' . $reservation->getendDate() .
                 }
             }
 
-            // $annoncesHtml = '';
-            // if (!empty($user->getAnnonces()))
-            // {
-            //     foreach ($user->getAnnonces() as $annonce)
-            //     {
-            //         $annoncesHtml .= $annonce->getTitre() . ' ' . $annonce->getPrix(). ' ';
-            //     }
-            // }
+            $annoncesHtml = '';
+            if (!empty($user->getAnnonces()))
+            {
+                foreach ($user->getAnnonces() as $annonce)
+                {
+                    $annoncesHtml .= $annonce->getTitre() . ' ' . $annonce->getPrix(). ' ';
+                }
+            }
             $html .=
                 '#' . $user->getId() . ' ' .
                 $user->getFirstname() . ' ' .

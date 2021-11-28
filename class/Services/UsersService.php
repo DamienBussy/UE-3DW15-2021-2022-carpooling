@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Entities\Car;
 use App\Entities\Reservation;
 use App\Entities\User;
+use App\Entities\Annonce;
 use DateTime;
 
 class UsersService
@@ -163,5 +164,40 @@ class UsersService
         }
 
         return $userReservations;
+    }
+
+    // Create relation bewteen an user and his annonce.
+    public function setUserAnnonce(string $userId, string $annonceId): bool
+    {
+        $isOk = false;
+
+        $dataBaseService = new DataBaseService();
+        $isOk = $dataBaseService->setUserAnnonce($userId, $annonceId);
+
+        return $isOk;
+    }
+
+    /**
+     * Get reservations of given user id.
+     */
+    public function getUserAnnonces(string $userId): array
+    {
+        $userAnnonces = [];
+
+        $dataBaseService = new DataBaseService();
+
+        // Get relation users and annonces :
+        $userAnnoncesDTO = $dataBaseService->getUserAnnonces($userId);
+        if (!empty($userAnnoncesDTO)) {
+            foreach ($userAnnoncesDTO as $userAnnonceDTO) {
+                $annonce = new Annonce();
+                $annonce->setId($userAnnonceDTO['id']);
+                $annonce->setTitre($userAnnonceDTO['titre']);
+                $annonce->setPrix($userAnnonceDTO['prix']);
+                $userAnnonces[] = $annonce;
+            }
+        }
+
+        return $userAnnonces;
     }
 }

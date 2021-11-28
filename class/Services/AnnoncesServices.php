@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Services\DataBaseService;
 use App\Entities\Annonce;
+use App\Entities\Reservation;
+use DateTime;
 
 class AnnoncesService
 {
@@ -52,37 +55,45 @@ class AnnoncesService
         return $isOk;
     }
 
-    public function setAnnonceCar(string $annonceId, string $carId): bool
+    public function setAnnonceReservation(string $annonceId, string $reservationID): bool
     {
         $isOk = false;
 
         $dataBaseService = new DataBaseService();
-        $isOk = $dataBaseService->setAnnonceCars($annonceId, $userId);
+        $isOk = $dataBaseService->setUserAnnonce($annonceId, $reservationID);
 
         return $isOk;
     }
 
     /**
-     * Get cars of given user id.
+     * Get reservations of given user id.
      */
-    public function getAnnoncesCars(string $annonceId): array
+    public function getAnnonceReservations(string $annonceId): array
     {
-        $annonceUsers = [];
+        $AnnonceReservation = [];
 
         $dataBaseService = new DataBaseService();
 
-        // Get relation users and cars :
-        $usersCarsDTO = $dataBaseService->getAnnoncesCars($annonceId);
-        if (!empty($annoncesCarsDTO)) {
-            foreach ($annoncescarsDTO as $annonceCarDTO) {
-                $car = new Car();
-                $car->setId($annonceCarDTO['id']);
-                $car->setTitre($annonceCarDTO['titre']);
-                $car->setPrix($annonceCarDTO['prix']);
-                $annoncesCars[] = $car;
+        // Get relation annonces and reservation :
+        $annonceReservationsDTO = $dataBaseService->getUserAnnonces($annonceId);
+        if (!empty($annonceReservationsDTO)) {
+            foreach ($annonceReservationsDTO as $annonceReservationDTO) {
+                $reservation = new Reservation();
+                $reservation->setId($annonceReservationDTO['id']);
+                $reservation->setnameReservation($annonceReservationDTO['nameReservation']);
+                $date = new DateTime($annonceReservationDTO['firstDate']);
+                if ($date !== false) 
+                {
+                    $reservation->setfirstDate($date);
+                }
+                $date = new DateTime($annonceReservationDTO['endDate']);
+                if ($date !== false) 
+                {
+                    $reservation->setendDate($date);
+                }
+                $AnnonceReservation[] = $reservation;
             }
         }
-
-        return $annoncesCars;
+        return $AnnonceReservation;
     }
 }

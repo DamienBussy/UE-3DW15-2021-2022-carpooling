@@ -14,7 +14,8 @@ class AnnoncesController
 
         // If the form have been submitted :
         if (isset($_POST['titre'])
-            && isset($_POST['prix'])) {
+            && isset($_POST['prix'])) 
+        {
             // Create the notice:
             $annonceService = new AnnoncesService();
             $annonceId = $annonceService->setAnnonce(
@@ -23,7 +24,17 @@ class AnnoncesController
                 $_POST['prix']
             );
 
-            if ($annonceId) {
+            $isOk = true;
+            if (!empty($_POST['reservations'])) 
+            {
+                foreach ($_POST['reservations'] as $reservationId) 
+                {
+                    $isOk = $annonceService->setAnnonceReservation($annonceId, $reservationId);
+                }
+            }
+
+            if ($annonceId && $isOk) 
+            {
                 $html = 'Annonce créée avec succès.';
             } else {
                 $html = 'Erreur lors de la création de l\'annonce.';
@@ -33,18 +44,14 @@ class AnnoncesController
         return $html;
     }
 
-    /**
-     * Return the html for the read action.
-     */
     public function getAnnonces(): string
     {
         $html = '';
 
-        // Get all notices :
+        // Get all annonces :
         $annoncesService = new AnnoncesService();
         $annonces = $annoncesService->getAnnonces();
 
-        
         // Get html :
         foreach ($annonces as $annonce)
         {
@@ -52,9 +59,25 @@ class AnnoncesController
                 '#' . $annonce->getId() . ' ' .
                 $annonce->getTitre() . ' ' .
                 $annonce->getPrix() . ' ' .'<br />';
-                
+
+            $reservationsHtml = '';
+            if (!empty($annonce->getReservations()))
+            {
+                foreach ($annonce->getReservations() as $reservation)
+                {
+                    $reservationsHtml .= $reservation->getnameReservation() .' ';
+                }
+            }
         }
 
+        $reservationsHtml = '';
+        if (!empty($annonce->getReservations()))
+        {
+            foreach ($annonce->getReservations() as $reservation)
+            {
+                $reservationsHtml .= $reservation->getnameReservation() .' ';
+            }
+        }
         return $html;
     }
 

@@ -7,6 +7,7 @@ class Annonce
     private $id;
     private $titre;
     private $prix;
+    private $reservations;
     
     public function getId(): string
     {
@@ -40,6 +41,18 @@ class Annonce
     public function setPrix(string $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getReservations(): string
+    {
+        return $this->reservations;
+    }
+
+    public function setReservations(string $reservations): self
+    {
+        $this->reservations = $reservations;
 
         return $this;
     }

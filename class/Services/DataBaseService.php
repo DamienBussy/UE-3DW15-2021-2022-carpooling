@@ -337,21 +337,6 @@ class DataBaseService
         return $annoncesReservation;
     }
 
-    // Retournes toutes les annonces
-    public function getAnnonces()
-    {
-    
-        $annonces = [];
-    
-        $sql = 'SELECT * FROM annonces';
-        $query = $this->connection->query($sql);
-        $results = $query->fetchAll(PDO::FETCH_ASSOC);
-        if (!empty($results)) {
-            $annonces = $results;
-        }
-    
-        return $annonces;
-    }
     
      // Creation d'une annonce   
     
@@ -371,6 +356,21 @@ class DataBaseService
         }
 
         return $annonceId;
+    }
+
+    // Retournes toutes les annonces
+    public function getAnnonces(): array
+    {
+        $annonces = [];
+
+        $sql = 'SELECT * FROM annonces';
+        $query = $this->connection->query($sql);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $annonces = $results;
+        }
+
+        return $annonces;
     }
     
         /**
