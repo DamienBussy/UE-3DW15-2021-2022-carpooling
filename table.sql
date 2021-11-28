@@ -33,9 +33,7 @@ CREATE TABLE `annonce` (
   `titre` varchar(255) NOT NULL,
   `prix` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
---
--- Dumping data for table `ads`
---
+
 
 INSERT INTO `annonce` (`id`, `titre`, `prix`) VALUES
 (1,'Trajet Bézier-Montpellier', 14),
