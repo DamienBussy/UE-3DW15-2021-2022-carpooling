@@ -6,3 +6,6 @@ require __DIR__ . '/vendor/autoload.php';
 
 $controller = new CarsController();
 echo $controller->getCars();
+?>
+<br><br>
+<a href="accueil.php" title="">Retour</a>

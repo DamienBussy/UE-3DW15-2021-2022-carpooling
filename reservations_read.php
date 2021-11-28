@@ -8,3 +8,5 @@ $controller = new ReservationsController();
 echo $controller->getReservations();
 
 ?>
+<br><br>
+<a href="accueil.php" title="">Retour</a>

@@ -15,3 +15,5 @@ echo $controller->deleteCar();
     <br />
     <input type="submit" value="Supprimer le véhicule">
 </form>
+
+<a href="accueil.php" title="">Retour</a>

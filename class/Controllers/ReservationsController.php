@@ -13,7 +13,8 @@ class ReservationsController
         // If the form have been submitted :
         if (isset($_POST['nameReservation']) &&
             isset($_POST['firstDate']) &&
-            isset($_POST['endDate'])) {
+            isset($_POST['endDate'])) 
+        {
             // Create the reservation :
             $reservationsService = new ReservationsService();
             $reservationsId = $reservationsService->setReservation(

@@ -27,3 +27,5 @@ echo $controller->updateUser();
     <br />
     <input type="submit" value="Modifier l'utilisateur">
 </form>
+
+<a href="accueil.php" title="">Retour</a>

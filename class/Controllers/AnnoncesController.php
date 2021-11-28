@@ -33,7 +33,16 @@ class AnnoncesController
                 }
             }
 
-            if ($annonceId && $isOk) 
+            $isOkAC = true;
+            if (!empty($_POST['cars'])) 
+            {
+                foreach ($_POST['cars'] as $carId) 
+                {
+                    $isOkAC = $annonceService->setAnnonceCar($annonceId, $carId);
+                }
+            }
+
+            if ($annonceId && $isOk && $isOkAC) 
             {
                 $html = 'Annonce créée avec succès.';
             } else {
@@ -48,7 +57,7 @@ class AnnoncesController
     {
         $html = '';
 
-        // Get all annonces :
+        // Get all annonces
         $annoncesService = new AnnoncesService();
         $annonces = $annoncesService->getAnnonces();
 

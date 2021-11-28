@@ -15,3 +15,5 @@ echo $controller->deleteUser();
     <br />
     <input type="submit" value="Supprimer un utilisateur">
 </form>
+
+<a href="accueil.php" title="">Retour</a>

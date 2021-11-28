@@ -36,3 +36,5 @@ $users = $usersService->getUsers();
     <br />
     <input type="submit" value="Créer une réservation">
 </form>
+
+<a href="accueil.php" title="">Retour</a>

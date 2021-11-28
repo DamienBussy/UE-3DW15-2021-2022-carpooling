@@ -15,3 +15,5 @@ echo $controller->deleteAnnonce();
     <br />
     <input type="submit" value="Supprimer l'annonce">
 </form>
+
+<a href="accueil.php" title="">Retour</a>

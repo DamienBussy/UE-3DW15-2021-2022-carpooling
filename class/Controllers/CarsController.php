@@ -6,7 +6,8 @@ use App\Services\CarsService;
 
 class CarsController
 {
-    public function createCar(): string {
+    public function createCar(): string
+    {
 
         $html='';
         if(isset($_POSt['brand']) && 
@@ -14,23 +15,25 @@ class CarsController
             isset($_POST['color']) &&
             isset($_POST['nbrSlots'])
         )
-
-        // Create the car :
-        $carsService = new CarsService();
-        $carId = $carsService->setCar(
-            null,
-            $_POST['brand'],
-            $_POST['model'],
-            $_POST['color'],
-            $_POST['nbrSlots'],
-        );
-
-        if($carId)
         {
-            $html="Le véhicule vient d'être ajouté";
-        }
-        else{
-            $html="Le véhicule n'a pas pu être ajouté";
+            // Create the car :
+            $carsService = new CarsService();
+            $carId = $carsService->setCar(
+                null,
+                $_POST['brand'],
+                $_POST['model'],
+                $_POST['color'],
+                $_POST['nbrSlots'],
+            );
+
+            if($carId)
+            {
+                $html="Le véhicule vient d'être ajouté";
+            }
+            else
+            {
+                $html="Le véhicule n'a pas pu être ajouté";
+            }
         }
         return $html;
 
@@ -83,16 +86,17 @@ class CarsController
 
 
 
-public function getCars(): string
+    public function getCars(): string
     {
         $html = '';
 
-        // Get all users :
+        // Get all cars :
         $carsService = new CarsService();
         $cars = $carsService->getCars();
 
         // Get html :
-        foreach ($cars as $car){
+        foreach ($cars as $car)
+        {
             $html .=
                 '#' . $car->getId() . ' ' .
                 $car->getBrand() . ' ' .

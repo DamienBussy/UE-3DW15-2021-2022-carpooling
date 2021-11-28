@@ -25,3 +25,5 @@ echo $controller->updateReservation();
     <br />
     <input type="submit" value="Editer la réservation">
 </form>
+
+<a href="accueil.php" title="">Retour</a>

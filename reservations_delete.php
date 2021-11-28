@@ -15,3 +15,5 @@ echo $controller->deleteReservation();
     <br />
     <input type="submit" value="Supprimer une réservation">
 </form>
+
+<a href="accueil.php" title="">Retour</a>

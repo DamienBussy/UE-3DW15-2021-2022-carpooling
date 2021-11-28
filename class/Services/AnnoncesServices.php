@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Services\DataBaseService;
+//use App\Services\DataBaseService;
 use App\Entities\Annonce;
 use App\Entities\Reservation;
 use App\Entities\Car;
@@ -13,11 +13,12 @@ class AnnoncesService
 
     public function getAnnonces(): array
     {
-        $annonce = [];
+        $annonces = [];
 
         $dataBaseService = new DataBaseService();
         $annoncesDTO = $dataBaseService->getAnnonces();
-        if (!empty($annoncesDTO)) {
+        if (!empty($annoncesDTO)) 
+        {
             foreach ($annoncesDTO as $annonceDTO)
             {
                 $annonce = new Annonce();
@@ -31,7 +32,8 @@ class AnnoncesService
         return $annonces;
     }
 
-    public function setAnnonce(?string $id, string $titre, int $prix){
+    public function setAnnonce(?string $id, string $titre, int $prix): string
+    {
         $annonceId = '';
 
         $dataBaseService = new DataBaseService();

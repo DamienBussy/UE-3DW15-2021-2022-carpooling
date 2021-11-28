@@ -21,3 +21,5 @@ echo $controller->updateAnnonce();
     <br />
     <input type="submit" value="Mettre à jour l'annonce">
 </form>
+
+<a href="accueil.php" title="">Retour</a>
